@@ -1,16 +1,20 @@
 from django.db import models
 from sleep.models import Element
+from django.contrib.auth import get_user_model
+from utils.common import BaseModel
+
+User = get_user_model()
 
 
-class Cart(models.Model):
-    title = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.title
-
-
-class CartItems(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="shop_cart")
+class CartItems(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
     item = models.ForeignKey(Element, on_delete=models.CASCADE, related_name="element")
 
     quantity = models.PositiveIntegerField(default=0)
+
+    # total_sum = models.IntegerField(null=True, blank=True)
+    #
+    # def total_sum(self):
+    #     return self.quantity*self.item.price
+
+

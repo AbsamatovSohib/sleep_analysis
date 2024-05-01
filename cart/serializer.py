@@ -1,19 +1,30 @@
-from cart.models import Cart, CartItems
+from cart.models import CartItems
 from sleep.serializer import ElementSerializer
 from rest_framework import serializers
 
 
 class CartItemSerializer(serializers.ModelSerializer):
     item = ElementSerializer()
+    total = serializers.IntegerField()
 
     class Meta:
         model = CartItems
-        fields = ("item", "quantity", )
+        fields = ("item", "quantity", "total")
 
 
-class CartSerializer(serializers.ModelSerializer):
-    shop_cart = CartItemSerializer(many=True)
 
+class Fornow(serializers.ModelSerializer):
+
+    total_sum = serializers.StringRelatedField()
     class Meta:
-        model = Cart
-        fields = ("title", "shop_cart")
+        model  = CartItems
+        fields = (
+            'total_sum',
+        )
+
+
+
+
+
+
+
